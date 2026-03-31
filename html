@@ -168,16 +168,20 @@ function fakeNotif(){
 startCountdown()
 fakeNotif()
 
-async function checkout(){
-  let data={
-    nama:document.getElementById('nama').value,
-    alamat:document.getElementById('alamat').value,
-    cart:cart,
-    discount:discount
-  }
-  let res=await fetch('/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
-  let result=await res.json()
-  window.location.href=result.payment_url
+function checkout(){
+ let nama = document.getElementById('nama').value
+  let alamat = document.getElementById('alamat').value
+
+  let text = "Halo, saya mau order:%0A"
+
+  cart.forEach(i=>{
+    text += `${i.nama} x${i.qty}%0A`
+  })
+
+  text += `%0ANama: ${nama}`
+  text += `%0AAlamat: ${alamat}`
+
+  window.open("https://wa.me/628XXXXXXX?text="+text)
 }
 </script>
 
