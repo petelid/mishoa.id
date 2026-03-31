@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order Berhasil</title>
+</head>
+<body>
+
+<h2>🎉 Pesanan Berhasil!</h2>
+<p>Terima kasih sudah order mishoa.id</p>
+
+<a href="/">Kembali ke menu</a>
+
+</body>
+</html>
