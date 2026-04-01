@@ -97,15 +97,10 @@ function renderCart(){
 }
 
 function checkout(){
-  let nama = document.getElementById('nama').value
-  let alamat = document.getElementById('alamat').value
+   let orderId = new Date().getTime().toString().slice(-6)
 
-  if(!nama || !alamat){
-    alert("Isi nama & alamat dulu ya")
-    return
-  }
+  let text = `Halo kak, saya mau order:%0AOrder#${orderId}%0A%0A`
 
-  let text = "Halo kak, saya mau order:%0A%0A"
   let total = 0
   let totalQty = 0
 
@@ -115,13 +110,16 @@ function checkout(){
     totalQty += i.qty
   })
 
-  // BONUS
   let bonus = Math.floor(totalQty / 3)
   if(bonus > 0){
     text += `%0A🎁 Bonus Ayam Bawang x${bonus}`
   }
 
   text += `%0A%0A💰 Total: Rp${total}`
+
+  let nama = document.getElementById('nama').value
+  let alamat = document.getElementById('alamat').value
+
   text += `%0A👤 Nama: ${nama}`
   text += `%0A📍 Alamat: ${alamat}`
 
