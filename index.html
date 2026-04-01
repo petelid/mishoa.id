@@ -115,13 +115,16 @@ Order#${orderId}
 
   let bonus = Math.floor(totalQty / 3)
   if(bonus > 0){
-  text += `\nBonus Ayam Bawang x${bonus}`
-}
+    text += `\nBonus Ayam Bawang x${bonus}`
+  }
 
-text += `\n\nTotal: Rp${total}`
+  text += `\n\nTotal: Rp${total}`
 
-text += `\nNama: ${nama}`
-text += `\nAlamat: ${alamat}`
+  let nama = document.getElementById('nama').value
+  let alamat = document.getElementById('alamat').value
+
+  text += `\nNama: ${nama}`
+  text += `\nAlamat: ${alamat}`
 
   window.open("https://wa.me/6282112007575?text=" + encodeURIComponent(text))
 }
