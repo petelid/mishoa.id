@@ -3,183 +3,127 @@
 <head>
   <title>mishoa.id 🍜</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .fade-in{animation:fade .25s ease}
-    @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
-    .fly{position:fixed; z-index:50; pointer-events:none; transition:all .7s cubic-bezier(.4,0,.2,1)}
-    .badge{position:absolute; top:10px; left:10px; background:#f97316; color:white; padding:4px 8px; font-size:12px; border-radius:8px}
-  </style>
 </head>
+
 <body class="bg-gray-100 p-6">
 
-<h1 class="text-4xl font-bold mb-2 text-center text-orange-500">🍜 Mishoa.id</h1>
+<h1 class="text-4xl font-bold text-center text-orange-500">🍜 Mishoa.id</h1>
 <p class="text-center mb-6 text-gray-600">Hangat dalam 3 menit 😋</p>
 
-<!-- STICKY CART BUTTON -->
-<div onclick="scrollToCart()" class="fixed bottom-6 right-6 bg-orange-500 text-white px-4 py-3 rounded-full shadow-lg cursor-pointer z-50">
-  🛒 <span id="cartCount">0</span>
-</div>
-
-<!-- FAKE ORDER NOTIF -->
-<div id="notif" class="fixed bottom-6 left-6 bg-white shadow-lg rounded-xl p-3 hidden"></div>
-
 <!-- PRODUK -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+<div class="grid md:grid-cols-3 gap-6 mb-10">
 
-  <div class="bg-white p-4 rounded-2xl shadow-lg hover:shadow-xl transition relative">
-    <div class="badge">🔥 Best Seller</div>
-    <img src="https://images.unsplash.com/photo-1512058564366-c9e3e0468a98?auto=format&fit=crop&w=600&q=80" class="rounded-xl mb-3 w-full h-48 object-cover" onerror="this.src='https://via.placeholder.com/600x400?text=Mishoa'">
-    <h2 class="text-xl font-bold">Mishoa Ayam Bawang</h2>
-    <p class="text-orange-500 font-semibold">Rp15.000</p>
-    <button onclick="addToCart('Ayam Bawang',15000,event)" class="bg-orange-500 hover:bg-orange-600 text-white w-full mt-3 py-2 rounded-xl">+ Keranjang</button>
+  <!-- AYAM BAWANG -->
+  <div class="bg-white p-4 rounded-xl shadow">
+    <img src="https://via.placeholder.com/300x200?text=Ayam+Bawang" class="rounded mb-2">
+    <h2 class="font-bold">Mishoa Ayam Bawang</h2>
+    <p>Rp15.000</p>
+    <button onclick="addToCart('Ayam Bawang',15000)" class="bg-orange-500 text-white w-full mt-2 p-2 rounded">+ Keranjang</button>
   </div>
 
-  <div class="bg-white p-4 rounded-2xl shadow-lg hover:shadow-xl transition">
-    <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=600&q=80" class="rounded-xl mb-3 w-full h-48 object-cover" onerror="this.src='https://via.placeholder.com/600x400?text=Mishoa'">
-    <h2 class="text-xl font-bold">Mishoa Laksa</h2>
-    <p class="text-orange-500 font-semibold">Rp18.000</p>
-    <button onclick="addToCart('Laksa',18000,event)" class="bg-orange-500 hover:bg-orange-600 text-white w-full mt-3 py-2 rounded-xl">+ Keranjang</button>
+  <!-- LAKSA -->
+  <div class="bg-white p-4 rounded-xl shadow">
+    <img src="https://via.placeholder.com/300x200?text=Laksa" class="rounded mb-2">
+    <h2 class="font-bold">Mishoa Laksa</h2>
+    <p>Rp18.000</p>
+    <button onclick="addToCart('Laksa',18000)" class="bg-orange-500 text-white w-full mt-2 p-2 rounded">+ Keranjang</button>
   </div>
 
-  <div class="bg-white p-4 rounded-2xl shadow-lg hover:shadow-xl transition">
-    <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=600&q=80" class="rounded-xl mb-3 w-full h-48 object-cover" onerror="this.src='https://via.placeholder.com/600x400?text=Mishoa'">
-    <h2 class="text-xl font-bold">Mishoa Goreng</h2>
-    <p class="text-orange-500 font-semibold">Rp17.000</p>
-    <button onclick="addToCart('Goreng',17000,event)" class="bg-orange-500 hover:bg-orange-600 text-white w-full mt-3 py-2 rounded-xl">+ Keranjang</button>
+  <!-- GORENG -->
+  <div class="bg-white p-4 rounded-xl shadow">
+    <img src="https://via.placeholder.com/300x200?text=Goreng" class="rounded mb-2">
+    <h2 class="font-bold">Mishoa Goreng</h2>
+    <p>Rp17.000</p>
+    <button onclick="addToCart('Goreng',17000)" class="bg-orange-500 text-white w-full mt-2 p-2 rounded">+ Keranjang</button>
   </div>
 
-</div>
-
-<!-- COUNTDOWN -->
-<div class="max-w-xl mx-auto mb-4 bg-red-50 border border-red-200 p-4 rounded-xl text-center">
-  <p class="font-semibold">⏰ Promo berakhir dalam:</p>
-  <p id="countdown" class="text-xl font-bold text-red-500"></p>
-</div>
-
-<!-- PROGRESS DISKON -->
-<div class="max-w-xl mx-auto mb-6">
-  <p class="text-sm mb-1">Tambah Rp20.000 lagi untuk diskon!</p>
-  <div class="w-full bg-gray-200 rounded-full h-3">
-    <div id="progressBar" class="bg-green-500 h-3 rounded-full" style="width:0%"></div>
-  </div>
 </div>
 
 <!-- KERANJANG -->
-<div id="cartSection" class="bg-white p-6 rounded-2xl shadow-lg max-w-xl mx-auto">
-  <h2 class="text-2xl font-bold mb-4">🛒 Keranjang</h2>
+<div class="bg-white p-6 rounded-xl shadow max-w-xl mx-auto">
+  <h2 class="text-xl font-bold mb-3">🛒 Keranjang</h2>
   <div id="cart"></div>
 
-  <input id="promo" placeholder="Kode promo (MIS20)" class="border p-2 w-full mt-3 rounded">
-  <button onclick="applyPromo()" class="text-sm text-blue-500 mt-1">Apply Promo</button>
+  <input id="nama" placeholder="Nama" class="border p-2 w-full mt-3">
+  <input id="alamat" placeholder="Alamat" class="border p-2 w-full mt-3">
 
-  <input id="nama" placeholder="Nama" class="border p-2 w-full mt-3 rounded">
-  <input id="alamat" placeholder="Alamat" class="border p-2 w-full mt-3 rounded">
+  <h3 class="mt-3 font-bold">Total: Rp <span id="total">0</span></h3>
 
-  <h3 class="mt-4 font-bold">Total: Rp <span id="total">0</span></h3>
-
-  <button onclick="checkout()" class="bg-green-500 hover:bg-green-600 text-white w-full mt-4 py-3 rounded-xl">Checkout</button>
+  <button onclick="checkout()" class="bg-green-500 text-white w-full mt-4 p-3 rounded">
+    Checkout via WhatsApp
+  </button>
 </div>
 
 <script>
 let cart = []
-let discount = 0
 
-function scrollToCart(){
-  document.getElementById('cartSection').scrollIntoView({behavior:'smooth'})
-}
-
-function animateAdd(e){
-  let rect = e.target.getBoundingClientRect()
-  let el = document.createElement('div')
-  el.innerText = '🍜'
-  el.className = 'fly'
-  el.style.left = rect.left+'px'
-  el.style.top = rect.top+'px'
-  document.body.appendChild(el)
-  setTimeout(()=>{
-    el.style.left = window.innerWidth - 80 + 'px'
-    el.style.top = window.innerHeight - 80 + 'px'
-    el.style.opacity = 0
-  },10)
-  setTimeout(()=>el.remove(),700)
-}
-
-function addToCart(nama, harga, e){
-  animateAdd(e)
+function addToCart(nama, harga){
   let item = cart.find(i => i.nama === nama)
-  if(item){item.qty += 1} else {cart.push({nama, harga, qty:1})}
+  if(item){
+    item.qty++
+  } else {
+    cart.push({nama, harga, qty:1})
+  }
   renderCart()
 }
 
 function renderCart(){
   let html = ""
   let total = 0
-  let count = 0
+  let totalQty = 0
 
-  cart.forEach(item=>{
-    let sub = item.harga * item.qty
+  cart.forEach(i=>{
+    let sub = i.harga * i.qty
     total += sub
-    count += item.qty
-    html += `<div class="flex justify-between border-b py-2 fade-in"><p>${item.nama} x${item.qty}</p><p>Rp${sub}</p></div>`
+    totalQty += i.qty
+
+    html += `<div class="flex justify-between border-b py-1">
+      <span>${i.nama} x${i.qty}</span>
+      <span>Rp${sub}</span>
+    </div>`
   })
 
-  total -= discount
-  if(total<0) total=0
+  // PROMO: BELI 3 GRATIS 1
+  let bonus = Math.floor(totalQty / 3)
+
+  if(bonus > 0){
+    html += `<div class="text-green-600 font-bold mt-2">
+      🎁 Bonus Ayam Bawang x${bonus}
+    </div>`
+  }
 
   document.getElementById('cart').innerHTML = html
   document.getElementById('total').innerText = total
-  document.getElementById('cartCount').innerText = count
-
-  let progress = Math.min((total/20000)*100,100)
-  document.getElementById('progressBar').style.width = progress + '%'
 }
-
-function applyPromo(){
-  let code = document.getElementById('promo').value
-  if(code==='MIS20'){discount=5000; alert('Diskon aktif!')} else {alert('Kode salah')}
-  renderCart()
-}
-
-function startCountdown(){
-  let end = new Date().getTime() + 3600*1000
-  setInterval(()=>{
-    let now = new Date().getTime()
-    let d = end-now
-    if(d<=0){document.getElementById('countdown').innerText='Habis';return}
-    let m=Math.floor((d%(1000*60*60))/(1000*60))
-    let s=Math.floor((d%(1000*60))/1000)
-    document.getElementById('countdown').innerText=m+'m '+s+'s'
-  },1000)
-}
-
-function fakeNotif(){
-  let names=['Budi','Siti','Andi','Rina']
-  let items=['Ayam Bawang','Laksa','Goreng']
-  setInterval(()=>{
-    let n=names[Math.floor(Math.random()*names.length)]
-    let i=items[Math.floor(Math.random()*items.length)]
-    let el=document.getElementById('notif')
-    el.innerText=`${n} baru saja beli ${i}`
-    el.classList.remove('hidden')
-    setTimeout(()=>el.classList.add('hidden'),3000)
-  },7000)
-}
-
-startCountdown()
-fakeNotif()
 
 function checkout(){
- let nama = document.getElementById('nama').value
+  let nama = document.getElementById('nama').value
   let alamat = document.getElementById('alamat').value
 
-  let text = "Halo, saya mau order:%0A"
+  if(!nama || !alamat){
+    alert("Isi nama & alamat dulu ya")
+    return
+  }
+
+  let text = "Halo kak, saya mau order:%0A%0A"
+  let total = 0
+  let totalQty = 0
 
   cart.forEach(i=>{
-    text += `${i.nama} x${i.qty}%0A`
+    text += `🍜 ${i.nama} x${i.qty} - Rp${i.harga*i.qty}%0A`
+    total += i.harga * i.qty
+    totalQty += i.qty
   })
 
-  text += `%0ANama: ${nama}`
-  text += `%0AAlamat: ${alamat}`
+  // BONUS
+  let bonus = Math.floor(totalQty / 3)
+  if(bonus > 0){
+    text += `%0A🎁 Bonus Ayam Bawang x${bonus}`
+  }
+
+  text += `%0A%0A💰 Total: Rp${total}`
+  text += `%0A👤 Nama: ${nama}`
+  text += `%0A📍 Alamat: ${alamat}`
 
   window.open("https://wa.me/6282112007575?text="+text)
 }
