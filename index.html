@@ -99,31 +99,34 @@ function renderCart(){
 function checkout(){
    let orderId = new Date().getTime().toString().slice(-6)
 
-  let text = `Halo kak, saya mau order:%0AOrder#${orderId}%0A%0A`
+  let text = `Halo kak, saya mau order:
+Order#${orderId}
+
+`
 
   let total = 0
   let totalQty = 0
 
   cart.forEach(i=>{
-    text += `🍜 ${i.nama} x${i.qty} - Rp${i.harga*i.qty}%0A`
+    text += `🍜 ${i.nama} x${i.qty} - Rp${i.harga*i.qty}\n`
     total += i.harga * i.qty
     totalQty += i.qty
   })
 
   let bonus = Math.floor(totalQty / 3)
   if(bonus > 0){
-    text += `%0A🎁 Bonus Ayam Bawang x${bonus}`
+    text += `\n🎁 Bonus Ayam Bawang x${bonus}`
   }
 
-  text += `%0A%0A💰 Total: Rp${total}`
+  text += `\n\n💰 Total: Rp${total}`
 
   let nama = document.getElementById('nama').value
   let alamat = document.getElementById('alamat').value
 
-  text += `%0A👤 Nama: ${nama}`
-  text += `%0A📍 Alamat: ${alamat}`
+  text += `\n👤 Nama: ${nama}`
+  text += `\n📍 Alamat: ${alamat}`
 
-  window.open("https://wa.me/6282112007575?text="+text)
+  window.open("https://wa.me/6282112007575?text=" + encodeURIComponent(text))
 }
 </script>
 
