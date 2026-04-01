@@ -5,56 +5,64 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 p-6">
+<body class="bg-gray-100">
 
-<h1 class="text-3xl font-bold text-center text-orange-500 mb-4">🍜 Mishoa.id</h1>
+<!-- HEADER -->
+<div class="bg-orange-500 text-white p-4 text-center text-xl font-bold shadow">
+  🍜 Mishoa.id
+</div>
 
-<!-- CART BUTTON -->
-<div onclick="scrollToCart()" class="fixed bottom-6 right-6 bg-orange-500 text-white px-4 py-2 rounded-full cursor-pointer">
+<!-- CART FLOAT -->
+<div onclick="scrollToCart()" class="fixed bottom-6 right-6 bg-orange-500 text-white px-4 py-3 rounded-full shadow-lg cursor-pointer z-50">
   🛒 <span id="cartCount">0</span>
 </div>
 
 <!-- PRODUK -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
 
-  <!-- AYAM BAWANG -->
-  <div class="bg-white p-4 rounded shadow">
-    <img src="https://images.unsplash.com/photo-1512058564366-c9e3e0468a98?auto=format&fit=crop&w=600&q=80" class="rounded mb-2">
-    <h2 class="font-bold">Ayam Bawang</h2>
-    <p class="text-orange-500">Rp15000</p>
-    <button onclick="addToCart('Ayam Bawang',15000)" class="bg-orange-500 text-white w-full mt-2">Tambah</button>
+  <!-- CARD -->
+  <div class="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
+    <img src="https://images.unsplash.com/photo-1512058564366-c9e3e0468a98?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+    <div class="p-4 flex flex-col flex-1">
+      <h2 class="font-bold text-lg">Ayam Bawang</h2>
+      <p class="text-orange-500 mb-2">Rp15.000</p>
+      <button onclick="addToCart('Ayam Bawang',15000)" class="mt-auto bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-xl">+ Keranjang</button>
+    </div>
   </div>
 
-  <!-- LAKSA -->
-  <div class="bg-white p-4 rounded shadow">
-    <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=600&q=80" class="rounded mb-2">
-    <h2 class="font-bold">Laksa</h2>
-    <p class="text-orange-500">Rp18000</p>
-    <button onclick="addToCart('Laksa',18000)" class="bg-orange-500 text-white w-full mt-2">Tambah</button>
+  <div class="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
+    <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+    <div class="p-4 flex flex-col flex-1">
+      <h2 class="font-bold text-lg">Laksa</h2>
+      <p class="text-orange-500 mb-2">Rp18.000</p>
+      <button onclick="addToCart('Laksa',18000)" class="mt-auto bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-xl">+ Keranjang</button>
+    </div>
   </div>
 
-  <!-- GORENG -->
-  <div class="bg-white p-4 rounded shadow">
-    <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=600&q=80" class="rounded mb-2">
-    <h2 class="font-bold">Goreng</h2>
-    <p class="text-orange-500">Rp17000</p>
-    <button onclick="addToCart('Goreng',17000)" class="bg-orange-500 text-white w-full mt-2">Tambah</button>
+  <div class="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
+    <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+    <div class="p-4 flex flex-col flex-1">
+      <h2 class="font-bold text-lg">Goreng</h2>
+      <p class="text-orange-500 mb-2">Rp17.000</p>
+      <button onclick="addToCart('Goreng',17000)" class="mt-auto bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-xl">+ Keranjang</button>
+    </div>
   </div>
 
 </div>
 
 <!-- CART -->
-<div id="cartSection" class="bg-white p-4 mt-6 rounded shadow">
-  <h2 class="font-bold mb-2">Keranjang</h2>
+<div id="cartSection" class="max-w-xl mx-auto bg-white p-6 rounded-2xl shadow m-4">
+  <h2 class="text-xl font-bold mb-4">🛒 Keranjang</h2>
+
   <div id="cart"></div>
 
-  <input id="nama" placeholder="Nama" class="border p-2 w-full mt-2">
-  <input id="alamat" placeholder="Alamat" class="border p-2 w-full mt-2">
+  <input id="nama" placeholder="Nama" class="border p-2 w-full mt-3 rounded">
+  <input id="alamat" placeholder="Alamat" class="border p-2 w-full mt-2 rounded">
 
-  <p class="mt-2">Total: Rp <span id="total">0</span></p>
+  <h3 class="mt-4 font-bold text-lg">Total: Rp <span id="total">0</span></h3>
 
-  <button onclick="checkout()" class="bg-green-500 text-white w-full mt-3 p-2">
-    Checkout WhatsApp
+  <button onclick="checkout()" class="bg-green-500 hover:bg-green-600 text-white w-full mt-4 py-3 rounded-xl">
+    Checkout via WhatsApp
   </button>
 </div>
 
@@ -67,7 +75,7 @@ function scrollToCart(){
 
 function addToCart(nama, harga){
   let item = cart.find(i => i.nama === nama)
-  if(item){ item.qty += 1 }
+  if(item){ item.qty++ }
   else { cart.push({nama, harga, qty:1}) }
   renderCart()
 }
@@ -89,11 +97,6 @@ function kurangQty(nama){
   renderCart()
 }
 
-function hapusItem(nama){
-  cart = cart.filter(i => i.nama !== nama)
-  renderCart()
-}
-
 function renderCart(){
   let html = ""
   let total = 0
@@ -105,23 +108,25 @@ function renderCart(){
     totalQty += item.qty
 
     html += `
-    <div class="flex justify-between border-b py-2">
+    <div class="flex justify-between items-center border-b py-2">
       <div>
-        ${item.nama}
-        <button onclick="kurangQty('${item.nama}')">-</button>
-        ${item.qty}
-        <button onclick="tambahQty('${item.nama}')">+</button>
+        <p class="font-semibold">${item.nama}</p>
+        <div class="flex items-center gap-2">
+          <button onclick="kurangQty('${item.nama}')" class="px-2 bg-gray-200 rounded">-</button>
+          <span>${item.qty}</span>
+          <button onclick="tambahQty('${item.nama}')" class="px-2 bg-gray-200 rounded">+</button>
+        </div>
       </div>
-      <div>
-        Rp${sub}
-        <button onclick="hapusItem('${item.nama}')">x</button>
+      <div class="text-right">
+        <p>Rp${sub}</p>
       </div>
-    </div>`
+    </div>
+    `
   })
 
   let bonus = Math.floor(totalQty / 3)
   if(bonus > 0){
-    html += `<p class="text-green-600 mt-2">🎁 Bonus Ayam Bawang x${bonus}</p>`
+    html += `<p class="text-green-600 mt-3">🎁 Bonus Ayam Bawang x${bonus}</p>`
   }
 
   document.getElementById('cart').innerHTML = html
