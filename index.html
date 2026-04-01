@@ -108,7 +108,7 @@ Order#${orderId}
   let totalQty = 0
 
   cart.forEach(i=>{
-    text += `🍜 ${i.nama} x${i.qty} - Rp${i.harga*i.qty}\n`
+    text += `• ${i.nama} x${i.qty} - Rp${i.harga*i.qty}\n`
     total += i.harga * i.qty
     totalQty += i.qty
   })
