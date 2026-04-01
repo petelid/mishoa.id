@@ -1,103 +1,100 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>mishoa.id 🍜</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body class="bg-gray-100 p-6">
-
-<h1 class="text-4xl font-bold text-center text-orange-500">🍜 Mishoa.id</h1>
-<p class="text-center mb-6 text-gray-600">Hangat dalam 3 menit 😋</p>
-
-<!-- PRODUK -->
-<div class="grid md:grid-cols-3 gap-6 mb-10">
-
-  <!-- AYAM BAWANG -->
-  <div class="bg-white p-4 rounded-xl shadow">
-    <img src="https://via.placeholder.com/300x200?text=Ayam+Bawang" class="rounded mb-2">
-    <h2 class="font-bold">Mishoa Ayam Bawang</h2>
-    <p>Rp15.000</p>
-    <button onclick="addToCart('Ayam Bawang',15000)" class="bg-orange-500 text-white w-full mt-2 p-2 rounded">+ Keranjang</button>
-  </div>
-
-  <!-- LAKSA -->
-  <div class="bg-white p-4 rounded-xl shadow">
-    <img src="https://via.placeholder.com/300x200?text=Laksa" class="rounded mb-2">
-    <h2 class="font-bold">Mishoa Laksa</h2>
-    <p>Rp18.000</p>
-    <button onclick="addToCart('Laksa',18000)" class="bg-orange-500 text-white w-full mt-2 p-2 rounded">+ Keranjang</button>
-  </div>
-
-  <!-- GORENG -->
-  <div class="bg-white p-4 rounded-xl shadow">
-    <img src="https://via.placeholder.com/300x200?text=Goreng" class="rounded mb-2">
-    <h2 class="font-bold">Mishoa Goreng</h2>
-    <p>Rp17.000</p>
-    <button onclick="addToCart('Goreng',17000)" class="bg-orange-500 text-white w-full mt-2 p-2 rounded">+ Keranjang</button>
-  </div>
-
-</div>
-
-<!-- KERANJANG -->
-<div class="bg-white p-6 rounded-xl shadow max-w-xl mx-auto">
-  <h2 class="text-xl font-bold mb-3">🛒 Keranjang</h2>
-  <div id="cart"></div>
-
-  <input id="nama" placeholder="Nama" class="border p-2 w-full mt-3">
-  <input id="alamat" placeholder="Alamat" class="border p-2 w-full mt-3">
-
-  <h3 class="mt-3 font-bold">Total: Rp <span id="total">0</span></h3>
-
-  <button onclick="checkout()" class="bg-green-500 text-white w-full mt-4 p-3 rounded">
-    Checkout via WhatsApp
-  </button>
-</div>
-
 <script>
 let cart = []
 
-function addToCart(nama, harga){
+function scrollToCart(){
+  document.getElementById('cartSection').scrollIntoView({behavior:'smooth'})
+}
+
+function animateAdd(e){
+  let rect = e.target.getBoundingClientRect()
+  let el = document.createElement('div')
+  el.innerText = '🍜'
+  el.className = 'fly'
+  el.style.left = rect.left+'px'
+  el.style.top = rect.top+'px'
+  document.body.appendChild(el)
+  setTimeout(()=>{
+    el.style.left = window.innerWidth - 80 + 'px'
+    el.style.top = window.innerHeight - 80 + 'px'
+    el.style.opacity = 0
+  },10)
+  setTimeout(()=>el.remove(),700)
+}
+
+function addToCart(nama, harga, e){
+  animateAdd(e)
   let item = cart.find(i => i.nama === nama)
   if(item){
-    item.qty++
+    item.qty += 1
   } else {
     cart.push({nama, harga, qty:1})
   }
   renderCart()
 }
 
+function tambahQty(nama){
+  let item = cart.find(i => i.nama === nama)
+  if(item){ item.qty += 1 }
+  renderCart()
+}
+
+function kurangQty(nama){
+  let item = cart.find(i => i.nama === nama)
+  if(item){
+    item.qty -= 1
+    if(item.qty <= 0){
+      cart = cart.filter(i => i.nama !== nama)
+    }
+  }
+  renderCart()
+}
+
+function hapusItem(nama){
+  cart = cart.filter(i => i.nama !== nama)
+  renderCart()
+}
+
 function renderCart(){
   let html = ""
   let total = 0
-  let totalQty = 0
+  let count = 0
 
-  cart.forEach(i=>{
-    let sub = i.harga * i.qty
+  cart.forEach(item=>{
+    let sub = item.harga * item.qty
     total += sub
-    totalQty += i.qty
+    count += item.qty
 
-    html += `<div class="flex justify-between border-b py-1">
-      <span>${i.nama} x${i.qty}</span>
-      <span>Rp${sub}</span>
+    html += `
+    <div class="flex justify-between items-center border-b py-2">
+      <div>
+        <p>${item.nama}</p>
+        <div>
+          <button onclick="kurangQty('${item.nama}')">-</button>
+          <span>${item.qty}</span>
+          <button onclick="tambahQty('${item.nama}')">+</button>
+        </div>
+      </div>
+      <div>
+        Rp${sub}
+        <button onclick="hapusItem('${item.nama}')">hapus</button>
+      </div>
     </div>`
   })
 
-  // PROMO: BELI 3 GRATIS 1
+  let totalQty = cart.reduce((sum,i)=>sum+i.qty,0)
   let bonus = Math.floor(totalQty / 3)
 
   if(bonus > 0){
-    html += `<div class="text-green-600 font-bold mt-2">
-      🎁 Bonus Ayam Bawang x${bonus}
-    </div>`
+    html += `<p>Bonus Ayam Bawang x${bonus}</p>`
   }
 
   document.getElementById('cart').innerHTML = html
   document.getElementById('total').innerText = total
+  document.getElementById('cartCount').innerText = count
 }
 
 function checkout(){
-   let orderId = new Date().getTime().toString().slice(-6)
+  let orderId = new Date().getTime().toString().slice(-6)
 
   let text = `Halo kak, saya mau order:
 Order#${orderId}
@@ -108,7 +105,7 @@ Order#${orderId}
   let totalQty = 0
 
   cart.forEach(i=>{
-    text += `• ${i.nama} x${i.qty} - Rp${i.harga*i.qty}\n`
+    text += `- ${i.nama} x${i.qty} - Rp${i.harga*i.qty}\n`
     total += i.harga * i.qty
     totalQty += i.qty
   })
@@ -129,6 +126,3 @@ Order#${orderId}
   window.open("https://wa.me/6282112007575?text=" + encodeURIComponent(text))
 }
 </script>
-
-</body>
-</html>
